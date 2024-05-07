@@ -1,6 +1,6 @@
-Para añadir nuevos clientes de Facturación electrónica a un servidor que ya contiene otro cliente de facturación electrónica, únicamente deberemos de crear sus DNS y generar sus proxy hosts con certificado SSL con NGINX.
+Para añadir nuevos clientes de Facturación electrónica a un servidor que ya contiene otro cliente de facturación electrónica, únicamente deberemos de crear sus DNS y generar sus proxys hosts con certificado SSL con NGINX.
 
-**Para la explicación se ha empleado el mismo ejemplo que el usado para la instalación pero cada cliente siempre tendrá su propio dominio, que el ejemplo no os confunda.**
+**Para la explicación se ha empleado el mismo ejemplo que el usado para la instalación, pero cada cliente siempre tendrá su propio dominio, que el ejemplo no os confunda.**
 
 ## 2. Crear registro A del cliente
 
@@ -29,7 +29,7 @@ Hemos comprado el dominio datacontrolodoo.es, para cada cliente tendremos que cr
 
 2. Cómo Crear los registros A en DONDOMINIO
 
-Accedemos a la siguiente URL: [Log In - Panel24|7](https://manage.panel247.com/login/)
+Accedemos a la siguiente URL: https://manage.panel247.com/login/
 
 Indicamos el nombre del dominio: datacontrolodoo.com, tu usuario y contraseña
 
@@ -63,7 +63,7 @@ Podemos acceder al configurar el Nginx a través del container nginx-app-1 hacie
 
 ![](images/2024-05-05-13-19-04-image.png)
 
-Al acceder a Nginx nos pedira las credenciales de acceso, le debemos de dar las credenciales que le dimos cuando se incorporó al primer cliente de FE en este servidor.
+Al acceder a Nginx nos pedirá las credenciales de acceso, le debemos de dar las credenciales que le dimos cuando se incorporó al primer cliente de FE en este servidor.
 
 Seguidamente, accederemos a Hosts/Proxy Hosts que será donde accederemos para crear los certificados SSL de los distintos registros A que hemos creado con el Excel facilitado para esta función.
 
@@ -73,7 +73,7 @@ Una vez dentro de esta sección, para añadir los distintos registros A para pos
 
 ![](images/2024-05-06-09-54-00-image.png)
 
-Al pulsar este botón nos aparecera una ventana emergente donde deberemos añadir en "Domain Names" el registro A generado en Excel, en "Forward Hostname / IP" será la IP generada por nuestro servidor Hetzner y el "Forward Port" y, por último, dejamos seleccionado "Block Common Exploits".
+Al pulsar este botón nos aparecerá una ventana emergente donde debemos añadir en "Domain Names" el registro A generado en Excel, en "Forward Hostname / IP" será la IP generada por nuestro servidor Hetzner y el "Forward Port" y, por último, dejamos seleccionado "Block Common Exploits".
 
 A continuación, veremos como se añade cada uno de los registros A que debemos añadir para el Odoo que estamos levantando.
 
@@ -121,16 +121,20 @@ Una vez añadido los registros A tendremos el siguiente panel (Estos registros A
 
 ![](images/2024-05-06-10-24-45-image.png)
 
-A continuación, crearemos certificado SSL a cada uno de los registros A. Para ello nos situaremos en el registro A que le vamos a crear el registro A y pulsamos en los tres puntitos y le damos a "Edit".
+A continuación, crearemos certificado SSL a cada uno de los registros A. Para ello nos situaremos en el registro A que le vamos a crear el certificado SSL y pulsamos en los tres puntitos y le damos a "Edit".
 
 ![](images/2024-05-06-11-37-16-image.png)
 
-Cetificado SSL para el registro A de Odoo: En la pantalla emergente que nos aparece, pulsamos en el botón SSL y en el despegable "SSL Certificate" y seleccionamos "Request a new SSL Certificate". Por último, seleccionamos "Force SSL" y "I Agree to the Let's Encrypt Terms of Service". El apartado "Email Address for Let's Encrypt" dejamos el correo que viene por defecto, el cual será el correo que nos ha proporcionado Data Control para esta tarea y será el mismo que le indicamos a NGinx en la activación. Finalizada la configuración guardamos los cambios pulsando en el botón "Save".
+- Cetificado SSL para el registro A de Odoo: En la pantalla emergente que nos aparece, pulsamos en el botón SSL y en el despegable "SSL Certificate" y seleccionamos "Request a new SSL Certificate". Por último, seleccionamos "Force SSL" y "I Agree to the Let's Encrypt Terms of Service". El apartado "Email Address for Let's Encrypt" dejamos el correo que viene por defecto, el cual será el correo que nos ha proporcionado Data Control para esta tarea y será el mismo que le indicamos a NGinx en la activación. Finalizada la configuración guardamos los cambios pulsando en el botón "Save".
 
 ![](images/2024-05-06-11-42-07-image.png)
 
 Realizamos la misma operación con el resto de registro A. Una vez se hayan agregado los hosts podremos fijarnos que la columna SSL aparecerá "Let's Encrypt":
 
-
-
 ![](images/2024-05-06-11-46-30-image.png)
+
+## 8. Creación base de datos de Odoo
+
+Para la creación de la base de datos de Odoo hay que tener en cuenta que la contraseña maestra es siempre 00000000 y el nombre de la base de datos debe ser el nombre del subdominio creado en este caso dwits-prueba
+
+![](C:\Users\manue\AppData\Roaming\marktext\images\2024-05-07-10-14-31-image.png)
