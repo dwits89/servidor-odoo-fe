@@ -46,7 +46,7 @@ Ejemplo de configuración del servidor (Aquellas configuraciones que no aparezca
 
 ![](images/2024-05-02-12-32-57-image.png)
 
-![](C:\Users\manue\AppData\Roaming\marktext\images\2024-05-06-18-37-58-image.png)
+![](images/2024-05-06-18-37-58-image.png)
 
 ![](images/2024-05-02-12-33-25-image.png)
 
@@ -169,8 +169,6 @@ Una vez ejecutado el comando se desconectará nuestro terminal debiendo  conecta
 
 ![](images/2024-05-02-14-49-10-image.png)
 
-
-
 Iniciada la consola, debemos instalar una serie de librerías python que necesitamos para determinados módulos de Odoo. Estas librerías son: pysftp, schwifty, pycountry y cryptography.
 
 - Para la instalación de estas librerías será necesario instalar Python 3:
@@ -179,9 +177,9 @@ Iniciada la consola, debemos instalar una serie de librerías python que necesit
 sudo apt install -y python3-pip
 ```
 
-![](C:\Users\manue\AppData\Roaming\marktext\images\2024-05-08-12-35-29-image.png)
+![](images/2024-05-08-12-35-29-image.png)
 
-![](C:\Users\manue\AppData\Roaming\marktext\images\2024-05-08-12-36-10-image.png)
+![](images/2024-05-08-12-36-10-image.png)
 
 - Verificamos la instalación de 'pip3'
 
@@ -189,7 +187,7 @@ sudo apt install -y python3-pip
 pip3 --version
 ```
 
-![](C:\Users\manue\AppData\Roaming\marktext\images\2024-05-08-12-38-11-image.png)
+![](images/2024-05-08-12-38-11-image.png)
 
 - Ahora, instalamos las librerías que necesitamos:
 
@@ -197,11 +195,9 @@ pip3 --version
 sudo pip3 install pysftp schwifty pycountry cryptography==3.4.8
 ```
 
-![](C:\Users\manue\AppData\Roaming\marktext\images\2024-05-08-12-38-35-image.png)
+![](images/2024-05-08-12-38-35-image.png)
 
-![](C:\Users\manue\AppData\Roaming\marktext\images\2024-05-08-12-39-30-image.png)
-
-
+![](images/2024-05-08-12-39-30-image.png)
 
 - Siguiente, para poder importar la librería schwifty necesitamos instalar el módulo `typing_extensions`
 
@@ -209,7 +205,7 @@ sudo pip3 install pysftp schwifty pycountry cryptography==3.4.8
 sudo pip3 install typing-extensions
 ```
 
-![](C:\Users\manue\AppData\Roaming\marktext\images\2024-05-08-12-51-49-image.png)
+![](images/2024-05-08-12-51-49-image.png)
 
 - Ahora instalamos las librerías, iniciamos el interprete de Python:
 
@@ -217,7 +213,7 @@ sudo pip3 install typing-extensions
 python3
 ```
 
-![](C:\Users\manue\AppData\Roaming\marktext\images\2024-05-08-12-43-57-image.png)
+![](images/2024-05-08-12-43-57-image.png)
 
 - Ahora, importamos cada una de las líbrerias:
   
@@ -245,7 +241,7 @@ import pycountry
 import cryptography
 ```
 
-![](C:\Users\manue\AppData\Roaming\marktext\images\2024-05-08-12-53-57-image.png)
+![](images/2024-05-08-12-53-57-image.png)
 
 - Importada las librerías, salimos del entorno python:
 
@@ -253,9 +249,7 @@ import cryptography
 exit()
 ```
 
-![](C:\Users\manue\AppData\Roaming\marktext\images\2024-05-08-12-54-47-image.png)
-
-
+![](images/2024-05-08-12-54-47-image.png)
 
 2. Clonación intalación Odoo
 
@@ -750,7 +744,39 @@ Una vez instaladas las librerías de apoyo, ya podremos acceder al Odoo vía IP 
 
 La contraseña maestra de vuestro Odoo será 00000000
 
-Aunque antes de realizar la creación de la base de datos de Odoo, realizaremos la Instalación NGINX Proxy Manager.
+Aunque antes de realizar la creación de la base de datos de Odoo, realizaremos la Instalación NGINX Proxy Manager y copiaremos unos módulos extras que serán necesarios en Odoo.
+
+Primero, copiaremos estos módulos extras y, para ello, volvemos a la consola y entramos en Midnight Commander.
+
+```
+mc
+```
+
+Ahora, en el panel de la izquierda nos dirigimos al directorio root/Install-Odoo/modulos_extras y en el panel de la derecha nos ubicaremos en el directorio data/compose/1/addons
+
+Recordad, para comprobar que estamos en los directorios correctos nos fijamos en el directorio que nos indica en la parte superior de cada panel.
+
+![](images/2024-05-08-13-09-06-image.png)
+
+Una vez comprobado que estamos en el directorio correcto, copiaremos las siguientes carpetas del panel de la izquierda al panel de la derecha:
+
+- auto_backup
+
+- login_user_detail
+
+- show_db_name
+
+- supermodulo16
+
+Recordad, para copiar las carpetas debemos pulsar en el botón inferior número 5 "Copy" o pulsar F5. Seguidamente, nos aparecerá una ventana de diálogo donde la ruta to deberá ser la misma que el directorio de la derecha y una vez comprobado que así sea, pulsamos en el botón "OK"
+
+![](images/2024-05-08-13-12-53-image.png)
+
+Una vez copiada todas las carpetas, pulsamos en el panel inferior al número 10 "Quit" o pulsamos en F10. Por último, reiniciamos el servidor con reboot.
+
+```
+reboot
+```
 
 ## 7.Instalación NGINX Proxy Manager
 
