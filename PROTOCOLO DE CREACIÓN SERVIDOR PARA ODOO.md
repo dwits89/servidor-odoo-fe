@@ -169,6 +169,94 @@ Una vez ejecutado el comando se desconectará nuestro terminal debiendo  conecta
 
 ![](images/2024-05-02-14-49-10-image.png)
 
+
+
+Iniciada la consola, debemos instalar una serie de librerías python que necesitamos para determinados módulos de Odoo. Estas librerías son: pysftp, schwifty, pycountry y cryptography.
+
+- Para la instalación de estas librerías será necesario instalar Python 3:
+
+```
+sudo apt install -y python3-pip
+```
+
+![](C:\Users\manue\AppData\Roaming\marktext\images\2024-05-08-12-35-29-image.png)
+
+![](C:\Users\manue\AppData\Roaming\marktext\images\2024-05-08-12-36-10-image.png)
+
+- Verificamos la instalación de 'pip3'
+
+```
+pip3 --version
+```
+
+![](C:\Users\manue\AppData\Roaming\marktext\images\2024-05-08-12-38-11-image.png)
+
+- Ahora, instalamos las librerías que necesitamos:
+
+```
+sudo pip3 install pysftp schwifty pycountry cryptography==3.4.8
+```
+
+![](C:\Users\manue\AppData\Roaming\marktext\images\2024-05-08-12-38-35-image.png)
+
+![](C:\Users\manue\AppData\Roaming\marktext\images\2024-05-08-12-39-30-image.png)
+
+
+
+- Siguiente, para poder importar la librería schwifty necesitamos instalar el módulo `typing_extensions`
+
+```
+sudo pip3 install typing-extensions
+```
+
+![](C:\Users\manue\AppData\Roaming\marktext\images\2024-05-08-12-51-49-image.png)
+
+- Ahora instalamos las librerías, iniciamos el interprete de Python:
+
+```
+python3
+```
+
+![](C:\Users\manue\AppData\Roaming\marktext\images\2024-05-08-12-43-57-image.png)
+
+- Ahora, importamos cada una de las líbrerias:
+  
+  - pysftp
+  
+  - schwifty
+  
+  - pycountry
+  
+  - cryptography
+
+```
+import pysftp
+```
+
+```
+import schwifty
+```
+
+```
+import pycountry
+```
+
+```
+import cryptography
+```
+
+![](C:\Users\manue\AppData\Roaming\marktext\images\2024-05-08-12-53-57-image.png)
+
+- Importada las librerías, salimos del entorno python:
+
+```
+exit()
+```
+
+![](C:\Users\manue\AppData\Roaming\marktext\images\2024-05-08-12-54-47-image.png)
+
+
+
 2. Clonación intalación Odoo
 
 A continuación, utilizaremos el comando que utiliza Git clonar (copiar) el repositorio remoto llamado "Install-Odoo" desde GitHub al directorio local actual en tu máquina. Esto te permite obtener una copia local completa del repositorio para trabajar con ella offline o hacer modificaciones.
