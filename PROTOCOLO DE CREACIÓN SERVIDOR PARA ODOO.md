@@ -4,25 +4,25 @@
 
 Cada técnico tiene creado un proyecto en el que poder crear servidores. Las características del servidor dependerán del tipo de servicio contratado:
 
-### a. Gestión de procesos y Gestión de clientes
+### a. Factura electrónica
 
-El servidor para los clientes que hayan contratado el servicio de gestión de clientes (KDGC) o el servicio de gestión de procesos (KDGP) contarán con un servidor propio con las siguientes características:
+El servicio de factura electrónica (KDFE) tiene la particularidad que se utiliza un mismo servidor para almacenar 10 clientes (salvo si tienen otro servicio de Odoo contratado). Por lo que habrá que almacenarlos en Kubernetes y no montar un nuevo servidor hasta que tengamos 10 clientes de FE. El servidor tendrá las siguientes características
 
-- Location: Falkenstein
+1. Location: Falkenstein
 
-- Image: Ubuntu 22.04
+2. Image: Ubuntu 22.04
 
-- Tipo: arquitectura Intel x86: CPX11
+3. Tipo: arquitectura Intel x86: CPX21
 
-- Networking: IPv4 e IPv6
+4. Networking: IPv4 e IPv6
 
-- Firewalls: Firewall 3 reglas (Se activará una vez finalizada toda la instalación de Odoo)
+5. Firewalls: Firewall 3 reglas (Se activará una vez finalizada toda la instalación de Odoo)
 
-- Backups: YES
+6. Backups: YES
 
-- Placement groups: crear grupos por cada 10 servidores creados (Es decir, en cada grupo debe haber un máximo de 10 servidores/clientes)
+7. Placement groups: crear grupos por cada 10 servidores creados (Es decir, en cada grupo debe haber un máximo de 10 servidores donde en cada servidor se alojarán 10 clientes de FE)
 
-- Nombre: nombre del cliente
+8. Nombre: nombre del cliente
 
 Para la creación de los servidores deberemos acceder a nuestra cuenta de Hetzner y facilitar las credecianles para iniciar sesión:
 
@@ -46,7 +46,7 @@ Ejemplo de configuración del servidor (Aquellas configuraciones que no aparezca
 
 ![](images/2024-05-02-12-32-57-image.png)
 
-![](images/2024-05-06-18-37-58-image.png)
+![](images/2024-05-13-18-44-31-image.png)
 
 ![](images/2024-05-02-12-33-25-image.png)
 
@@ -60,27 +60,7 @@ Si no habéis creado nunca un grupo debéis seleccionar "Create placement group"
 
 ![](images/2024-05-02-12-35-42-image.png)
 
-![](images/2024-05-02-12-35-54-image.png)
-
-### b. Factura electrónica
-
-El servicio de factura electrónica (KDFE) tiene la particularidad que se utiliza un mismo servidor para almacenar 10 clientes (salvo si tienen otro servicio de Odoo contratado). Por lo que habrá que almacenarlos en Kubernetes y no montar un nuevo servidor hasta que tengamos 10 clientes de FE. El servidor tendrá las siguientes características
-
-1. Location: Falkenstein
-
-2. Image: Ubuntu 22.04
-
-3. Tipo: arquitectura Intel x86: CPX21
-
-4. Networking: IPv4 e IPv6
-
-5. Firewalls: Firewall 3 reglas (Se activará una vez finalizada toda la instalación de Odoo)
-
-6. Backups: YES
-
-7. Placement groups: crear grupos por cada 10 servidores creados (Es decir, en cada grupo debe haber un máximo de 10 servidores donde en cada servidor se alojarán 10 clientes de FE)
-
-8. Nombre: nombre del cliente
+![](images/2024-05-13-18-46-39-image.png)
 
 ## 2. Crear registro A del cliente
 
@@ -168,88 +148,6 @@ reboot
 Una vez ejecutado el comando se desconectará nuestro terminal debiendo  conectarnos de nuevo. Importante, la contraseña de vuestro terminal seguirá teniendo la contraseña que nos dio el servidor y que como recordaréis la hemos cambiado, por ello os recomendamos que se cambie el campo password con la nueva contraseña que le hemos indicado a nuestro servidor Ubuntu.
 
 ![](images/2024-05-02-14-49-10-image.png)
-
-Iniciada la consola, debemos instalar una serie de librerías python que necesitamos para determinados módulos de Odoo. Estas librerías son: pysftp, schwifty, pycountry y cryptography.
-
-- Para la instalación de estas librerías será necesario instalar Python 3:
-
-```
-sudo apt install -y python3-pip
-```
-
-![](images/2024-05-08-12-35-29-image.png)
-
-![](images/2024-05-08-12-36-10-image.png)
-
-- Verificamos la instalación de 'pip3'
-
-```
-pip3 --version
-```
-
-![](images/2024-05-08-12-38-11-image.png)
-
-- Ahora, instalamos las librerías que necesitamos:
-
-```
-sudo pip3 install pysftp schwifty pycountry cryptography==3.4.8
-```
-
-![](images/2024-05-08-12-38-35-image.png)
-
-![](images/2024-05-08-12-39-30-image.png)
-
-- Siguiente, para poder importar la librería schwifty necesitamos instalar el módulo `typing_extensions`
-
-```
-sudo pip3 install typing-extensions
-```
-
-![](images/2024-05-08-12-51-49-image.png)
-
-- Ahora instalamos las librerías, iniciamos el interprete de Python:
-
-```
-python3
-```
-
-![](images/2024-05-08-12-43-57-image.png)
-
-- Ahora, importamos cada una de las líbrerias:
-  
-  - pysftp
-  
-  - schwifty
-  
-  - pycountry
-  
-  - cryptography
-
-```
-import pysftp
-```
-
-```
-import schwifty
-```
-
-```
-import pycountry
-```
-
-```
-import cryptography
-```
-
-![](images/2024-05-08-12-53-57-image.png)
-
-- Importada las librerías, salimos del entorno python:
-
-```
-exit()
-```
-
-![](images/2024-05-08-12-54-47-image.png)
 
 2. Clonación intalación Odoo
 
@@ -778,6 +676,28 @@ Una vez copiada todas las carpetas, pulsamos en el panel inferior al número 10 
 reboot
 ```
 
+Una vez copiado nos aseguraramos que en el archivo **odoo.conf** su filtro **dbfilter = ^%d_.***
+
+Para ello, accedemos en el panel de la izquierda en el directorio data/compose/1/config donde tendremos acceso al archivo odoo.conf. Para acceder a este, nos situamos en el archivo y pulsamos en el panel inferior el número 4 "Edit" o pulsando F4.
+
+![](images/2024-05-10-11-23-28-image.png)
+
+Una vez dentro del archivo se cambia dbfilter=^%d$ por dbfilter = ^%d_.*
+
+- Archivo odoo.conf antes del cambio
+
+![](images/2024-05-10-11-33-23-image.png)
+
+- Archivo odoo.conf cambiando el fitro. En la imagén podréis ver como se realiza el cambio.
+
+![](images/2024-05-10-12-02-08-image.png)
+
+Una vez cambiado el archivo, salimos de Midnight Commander y reiniciamos el servidor con reboot.
+
+```
+reboot
+```
+
 ## 7.Instalación NGINX Proxy Manager
 
 Podemos acceder al configurar el Nginx a través del container nginx-app-1 haciendo click a la url del puerto 81.
@@ -868,8 +788,162 @@ Realizamos la misma operación con el resto de registro A. Una vez se hayan agre
 
 ![](images/2024-05-06-11-46-30-image.png)
 
-## 8. Creación base de datos de Odoo
+## 8. Instalación de librerías python necesarias para algunos módulos de Odoo
 
-Para la creación de la base de datos de Odoo hay que tener en cuenta que la contraseña maestra es siempre 00000000 y el nombre de la base de datos debe ser el nombre del subdominio creado en este caso dwits-prueba 
+Lo primero que haremos será abrir el contenedor `odoo16-web-1` como usuario root para poder hacer las instalaciones necesarias.
 
-![](images/2024-05-07-10-14-31-image.png)
+```
+docker exec -it --user root odoo16-web-1 bash
+```
+
+Después, instalamos la lista de paquetes e instala Python 3 pip.
+
+```
+ apt update && apt install -y python3-pip
+```
+
+![](images/2024-05-10-13-17-36-image.png)
+
+Ahora, instalamos el paquete `pysftp` para Python 3, que proporciona una interfaz simple para transferir archivos mediante SFTP (Secure File Transfer Protocol).
+
+```
+pip3 install pysftp
+```
+
+![](images/2024-05-10-13-18-00-image.png)
+
+Instalamos el paquete `schwifty` para Python 3, que facilita la validación y manejo de códigos IBAN y BIC en aplicaciones financieras.
+
+```
+pip3 install schwifty==2024.4.0
+```
+
+![](images/2024-05-10-13-18-20-image.png)
+
+Siguiente, se reinstala forzosamente una versión específica (3.4.8) del paquete `cryptography` para Python 3, incluso si ya está instalado.
+
+```
+pip3 install cryptography==3.4.8 --force-reinstall
+```
+
+![](images/2024-05-10-13-20-06-image.png)
+
+Por último, instala las bibliotecas necesarias para trabajar con XML y HTML en Python. E instalamos el paquete `xmlsig` para Python 3, que proporciona soporte para la firma y validación de documentos XML según el estándar XML Signature (XMLDSIG).
+
+```
+apt update && apt install -y python3-lxml libxml2-dev libxslt-dev
+```
+
+![](images/2024-05-10-13-20-46-image.png)
+
+```
+pip3 install xmlsig
+```
+
+![](images/2024-05-10-13-21-03-image.png)
+
+```
+exit
+```
+
+```
+reboot
+```
+
+![](images/2024-05-10-13-21-44-image.png)
+
+## 9. Creación base de datos de Odoo
+
+(Para este ejemplo se ha usado otra instalación de Odoo **dwits-fe**)
+
+Para la creación de la base de datos de Odoo apuntaremos las credenciales que usemos para facilitársela posteriormente en el script que se ejecutará para instalar los módulos necesarios según el servicio que requiera el cliente.
+
+![](images/2024-05-13-19-36-38-image.png)
+
+- Master Password: será inicialmente la misma para todas las instalaciones Odoo que se realice 00000000
+
+- Database Name: su estructura será siempre el nombre del subdominio creado acompañado de una barra baja y una enumeración indicada. Ejemplo, esta instalacción de odoo el dominio es lobo-digital.datacontrolodoo.com, por lo tanto, el database name podría ser dwits-fe_1305
+
+Una vez creada la base de datos de Odoo, acudiremos al siguiente repositorio git hub [servidor_odoo/Servicios at main · dwits89/servidor_odoo · GitHub](https://github.com/dwits89/servidor_odoo/tree/main/Servicios) y descargaremos el script del servicio que se le esté ofreciendo al cliente, que siguiendo este guía será siempre facturación electrónica:
+
+![](images/2024-05-13-17-27-53-image.png)
+
+Ejemplo, en el caso que se vaya instalar a un cliente un odoo con facturación electrónica Odoo-FE. Accedemos a está carpeta y descargamos el script que contiene.
+
+![](images/2024-05-13-18-41-17-image.png)
+
+Para descargar el script, pulsamos en install_modules.py y una vez abierto el archivo, lo descargamos.
+
+![](images/2024-05-13-18-42-34-image.png)
+
+Una vez descargado el fichero, lo editamos para facilitarle la configuración de nuestro Odoo.
+
+![](images/2024-05-13-19-39-24-image.png)
+
+Una vez editado el fichero, con la configuración del Odoo que estamos instalando, nos debemos conectar por sftp al servidor.
+
+- Nos desconectamos del servidor pulsando en el botón "Log Out" (En caso que estuvieramos aún conectado de un paso anterior)
+
+![](images/2024-05-02-19-32-51-image.png)
+
+- Nos volvemos a conectar al servidor pulsando en el botón "Log in".
+
+![](images/2024-05-05-12-14-08-image.png)
+
+Y nos conectamos por SFTP a nuestro servidor pulsando en "New SFTP window":
+
+![](images/2024-05-13-17-41-56-image.png)
+
+Al pulsar en este botón, se nos abrirá una nueva ventana con el SFTP, donde en el panel de la izquierda se encontrará nuestro ordenador y en la derecha el servidor. En el panel de la iziquierda daremos el directorio donde tengamos nuestro archivo script descargado y editado con la configuración, y en la pantalla de la derecha accederemos al directorio /opt
+
+![](images/2024-05-13-17-45-01-image.png)
+
+En el panel de la derecha, creamos una carpeta que llamaremos scripts y será donde subamos nuestro archivo script. Muy importante, el archivo script que subamos siempre tendrá que tener el nombre install_modules.py
+
+![](images/2024-05-13-17-47-34-image.png)
+
+Archivo subido en el directorio /opt/scripts:
+
+![](images/2024-05-13-17-48-43-image.png)
+
+Una vez subido el fichero, es momento de ejecutar el script en nuestra consola. Para ello abrimos una consola:
+
+![](images/2024-05-05-12-48-12-image.png)
+
+Seguidamente, nos situamos en el directorio que encuentra el script:
+
+```
+cd /opt/scripts
+```
+
+Otorgamos permisos de ejecución al fichero que contiene el script:
+
+```
+sudo chmod +x install_modules.py
+```
+
+![](images/2024-05-13-17-52-36-image.png)
+
+Y ejecutamos el script:
+
+```
+python3 /opt/scripts/install_modules.py
+```
+
+Si todo ha ido correctamente aparecerá el siguiente mensaje.
+
+![](images/2024-05-13-18-08-46-image.png)
+
+Sí alguno de los módulo no ha podido instalarse, se te indicará cual ha sido dando el nombre técnico. Dado ese caso, se tendrá que instalar manualmente.
+
+Para dar por finalizada la instalación de Odoo, se debe instalar manualmente los tres siguientes módulo:
+
+- l10n_es_partner
+
+- l10n_es_facturae
+
+- login_user_detail
+
+El módulo l10n_es_partner pedirá dónde tomar los datos, donde se indicará que lo importe desde internet:
+
+![](images/2024-05-13-18-12-47-image.png)
