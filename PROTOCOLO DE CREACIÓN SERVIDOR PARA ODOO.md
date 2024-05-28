@@ -955,3 +955,33 @@ Para dar por finalizada la instalación de Odoo, se debe instalar manualmente lo
 El módulo l10n_es_partner pedirá dónde tomar los datos, donde se indicará que lo importe desde internet:
 
 ![](images/2024-05-13-18-12-47-image.png)
+
+Instalado los módulos restante a mano, accedemos a nuestra consola y entramos en Midnight Commander.
+
+```
+mc
+```
+
+Una vez dentro, accedemos en el panel de la izquierda en el directorio data/compose/1/config donde editaremos el archivo odoo.conf. Para editar, nos situamos en el archivo y pulsamos en el panel inferior el número 4 "Edit" o pulsando F4.
+
+![](images/2024-05-10-11-23-28-image.png)
+
+Una vez dentro, editamos el filtro list_db donde lo cambiaremos de True a false. 
+
+![](images/2024-05-28-14-18-06-image.png)
+
+De esta manera, cuando el usuario entre en su Odoo no podrá gestionar su base de datos de Odoo. Esta acción se realiza porque estos servidores al ser FE se compartirá el servidor hasta un máximo de diez cliente y con este cambio evitamos que los clientes puedan ver la instalación de Odoo que no sea la suya.
+
+Finalizada la instalación y configuración, se accede al servidor de Hetzner y se crea una regla de Firewall donde la configuración debe ser la siguiente:
+
+![](images/2024-05-28-13-51-47-image.png)
+
+![](images/2024-05-28-13-14-05-image.png)
+
+Una vez creada, accederemos a la maquina del cliente y le asignamos la regla que hemos creado (Esta regla solo se tendrá que crear una vez y ser usada para el resto de clientes)
+
+![](images/2024-05-28-13-54-37-image.png)
+
+![](images/2024-05-28-13-56-39-image.png)
+
+Para que nos aparezca esta regla en la maquina seleccionada, debemos de esperar un par de minutos. (La mayoría de las veces se debe de recargar la página para que nos aparezca)

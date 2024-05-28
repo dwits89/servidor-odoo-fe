@@ -137,6 +137,16 @@ Realizamos la misma operación con el resto de registro A. Una vez se hayan agre
 
 (Para este ejemplo se ha usado otra instalación de Odoo **dwits-fe-2**)
 
+Antes de crear la base de datos del cliente debemos acceder al archivo odoo.conf mediante Midnight Commander para modificar el filtro list_db donde lo cambiaremos de false a True. De esta manera, podremos ver las base de datos y crearla para el nuevo cliente.
+
+```
+mc
+```
+
+![](images/2024-05-10-11-23-28-image.png)
+
+![](images/2024-05-28-14-18-06-image.png)
+
 Para la creación de la base de datos de Odoo apuntaremos las credenciales que usemos para facilitársela posteriormente en el script que se ejecutará para instalar los módulos necesarios según el servicio que requiera el cliente.
 
 ![](images/2024-05-13-19-36-38-image.png)
@@ -228,3 +238,13 @@ Para dar por finalizada la instalación de Odoo, se debe instalar manualmente lo
 El módulo l10n_es_partner pedirá dónde tomar los datos, donde se indicará que lo importe desde internet:
 
 ![](images/2024-05-13-18-12-47-image.png)
+
+Instalado los módulos restante a mano, accedemos a nuestra consola y entramos en Midnight Commander para volver a editar el archivo odoo.conf y cambiar el filtro list_db de True a false.
+
+```
+mc
+```
+
+![](images/2024-05-10-11-23-28-image.png)
+
+![](images/2024-05-28-14-18-06-image.png)
