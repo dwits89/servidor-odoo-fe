@@ -870,9 +870,9 @@ Para la creación de la base de datos de Odoo apuntaremos las credenciales que u
 
 ![](images/2024-05-13-19-36-38-image.png)
 
-- Master Password: será inicialmente la misma para todas las instalaciones Odoo que se realice 00000000
+- Master Password: la contraseña será la usada por un generador de contraseña, nunca deberemos de usar la contraseña de los 8 ceros.
 
-- Database Name: su estructura será siempre el nombre del subdominio creado acompañado de una barra baja y una enumeración indicada. Ejemplo, esta instalacción de odoo el dominio es lobo-digital.datacontrolodoo.com, por lo tanto, el database name podría ser dwits-fe_1305
+- Database Name: su estructura será siempre el nombre del dominio. Ejemplo, esta instalacción de odoo el dominio es lobo-digital.datacontrolodoo.com, por lo tanto, el database name será lobo-digital.datacontrolodoo.com
 
 Una vez creada la base de datos de Odoo, acudiremos al siguiente repositorio git hub [servidor_odoo/Servicios at main · dwits89/servidor_odoo · GitHub](https://github.com/dwits89/servidor_odoo/tree/main/Servicios) y descargaremos el script del servicio que se le esté ofreciendo al cliente, que siguiendo este guía será siempre facturación electrónica:
 
