@@ -212,7 +212,7 @@ ls
 htop
 ```
 
-<img title="" src="file:///C:/Users/manue/AppData/Roaming/marktext/images/2024-05-02-17-50-40-image.png" alt="" data-align="center" width="715">
+![](images/2024-05-02-17-50-40-image.png)
 
 Para salir de esta ventana pulsamos en el teclado F10 o Ctrl + C
 
@@ -690,15 +690,17 @@ Para ello, accedemos en el panel de la izquierda en el directorio data/compose/1
 
 ![](images/2024-05-10-11-23-28-image.png)
 
-Una vez dentro del archivo se cambia dbfilter=^%d$ por dbfilter = ^%d_.*
+Una vez dentro del archivo se crea el filtro dbfilter=%d sin comentar y dejando los tres que ya estaba comentado (para comentar se añade punto y coma antes del filtro).
 
-- Archivo odoo.conf antes del cambio
+Además, se cambia la contraseña del filtro admin_passwd = 00000000 por otra contraseña de ochos caracteres o más, generado por un generador de contraseñas. (Podemos usar el generador https://www.lastpass.com/es/features/password-generator ). Esta contraseña será la que usemos posteriormente como contraseña maestra de la base de datos del odoo que estáis montando.
 
-![](images/2024-05-10-11-33-23-image.png)
+Por otro lado, cambiamos los siguientes filtros y lo dejamos sin comentar:
 
-- Archivo odoo.conf cambiando el fitro. En la imagén podréis ver como se realiza el cambio.
+- limit_time_real = 600
 
-![](images/2024-05-10-12-02-08-image.png)
+- quitamos el comentario al filtro workers = 2
+
+![](images/2024-05-31-18-56-57-image.png)
 
 Una vez cambiado el archivo, salimos de Midnight Commander y reiniciamos el servidor con reboot.
 
@@ -956,21 +958,11 @@ El módulo l10n_es_partner pedirá dónde tomar los datos, donde se indicará qu
 
 ![](images/2024-05-13-18-12-47-image.png)
 
-Instalado los módulos restante a mano, accedemos a nuestra consola y entramos en Midnight Commander.
+Instalados los addons que faltaban de forma manual, volvemos a la consola y entramos en Midnight Commander para modificar nuevamente el archivo odoo.conf (su ruta es /data/compose/1/config) donde se modificará el filtro list_db = False y se deja sin comentar. Con esto cambio, ocultaremos en el panel de iniciar sesión de Odoo la gestión de base de datos. de esta manera, crearemos una medida de seguridad para evitar que conozcan la contraseña maestra de la base de datos mediante fuerza bruta.
 
-```
-mc
-```
+![](images/Gestión BBDD oculto.png)
 
-Una vez dentro, accedemos en el panel de la izquierda en el directorio data/compose/1/config donde editaremos el archivo odoo.conf. Para editar, nos situamos en el archivo y pulsamos en el panel inferior el número 4 "Edit" o pulsando F4.
-
-![](images/2024-05-10-11-23-28-image.png)
-
-Una vez dentro, editamos el filtro list_db donde lo cambiaremos de True a false. 
-
-![](images/2024-05-28-14-18-06-image.png)
-
-De esta manera, cuando el usuario entre en su Odoo no podrá gestionar su base de datos de Odoo. Esta acción se realiza porque estos servidores al ser FE se compartirá el servidor hasta un máximo de diez cliente y con este cambio evitamos que los clientes puedan ver la instalación de Odoo que no sea la suya.
+Además, estos servidores al ser compartido, no permitiremos que los clientes existentes en estos servidores puedan ver las bases de datos de los otros clientes. Como recordatorio, estos servidores al ser únicamente clientes de FE se deberán de introducir 10 clientes.
 
 Finalizada la instalación y configuración, se accede al servidor de Hetzner y se crea una regla de Firewall donde la configuración debe ser la siguiente:
 
