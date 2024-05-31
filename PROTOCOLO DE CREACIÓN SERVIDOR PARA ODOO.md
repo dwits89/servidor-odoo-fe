@@ -960,7 +960,7 @@ El módulo l10n_es_partner pedirá dónde tomar los datos, donde se indicará qu
 
 Instalados los addons que faltaban de forma manual, volvemos a la consola y entramos en Midnight Commander para modificar nuevamente el archivo odoo.conf (su ruta es /data/compose/1/config) donde se modificará el filtro list_db = False y se deja sin comentar. Con esto cambio, ocultaremos en el panel de iniciar sesión de Odoo la gestión de base de datos. de esta manera, crearemos una medida de seguridad para evitar que conozcan la contraseña maestra de la base de datos mediante fuerza bruta.
 
-![](images/Gestión BBDD oculto.png)
+![](images/2024-05-31-19-44-51-image.png)
 
 Además, estos servidores al ser compartido, no permitiremos que los clientes existentes en estos servidores puedan ver las bases de datos de los otros clientes. Como recordatorio, estos servidores al ser únicamente clientes de FE se deberán de introducir 10 clientes.
 
