@@ -740,7 +740,7 @@ reboot
 
 ![](images/2024-05-10-13-21-44-image.png)
 
-## 9. Pasos finales
+## 8. Pasos finales
 
 Una vez que los implementadores nos notifiquen que han finalizado la instalación del Odoo de su cliente, volveremos a la consola y entramos en Midnight Commander para modificar nuevamente el archivo odoo.conf (su ruta es /data/compose/1/config) donde se modificará el filtro list_db = False y se deja sin comentar. Con este cambio, ocultaremos en el panel de iniciar sesión de Odoo la gestión de base de datos. De esta manera, crearemos una medida de seguridad para evitar que conozcan la contraseña maestra de la base de datos mediante fuerza bruta.
 
